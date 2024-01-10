@@ -37,12 +37,14 @@ public class NoteController {
     }
 
     @PutMapping("/note/{id}")
+    @PreAuthorize("hasRole('USER')")
     ResponseEntity<NoteResponse> updateNote(@PathVariable(value="id") Long id,@RequestBody NoteRequest note,HttpServletRequest request) throws NoteNotFoundException, InvalidUserException {
         noteService.updateNote(id,note,request);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/note/{id}")
+    @PreAuthorize("hasRole('USER')")
     ResponseEntity<?> deleteNote(@PathVariable(value="id") Long id,HttpServletRequest request) throws NoteNotFoundException, InvalidUserException {
         noteService.deleteNote(id,request);
         return new ResponseEntity<>(HttpStatus.OK);
